@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SASO - Student Clinic Record Form</title>
+<link rel="icon" type="image/png" href="school logo.jpg">
+<style>
+
+/* Base Styles */
+body {
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(135deg,#b2f2bb,#d4edda);
+  margin:0;
+  padding:0;
+}
+header {
+  background-color:#155724;
+  color:white;
+  text-align:center;
+  padding:18px 0;
+  font-size:22px;
+  font-weight:bold;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  position:relative;
+}
+header::after {
+  content:"";
+  display:block;
+  height:6px;
+  width:100%;
+  background:linear-gradient(to right,#00c853,#a5d6a7,#00c853);
+  position:absolute;
+  bottom:0;
+  left:0;
+}
+
+.container {
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:40px;
+  padding:40px;
+  flex-wrap:wrap;
+}
+
+.form-card {
+  background:white;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+  padding:40px 50px;
+  width:850px;
+  border-left:8px solid #218838;
+  position:relative;
+}
+
+h1 {
+  text-align:center;
+  color:#155724;
+  margin-bottom:25px;
+  border-bottom:2px solid #218838;
+  padding-bottom:10px;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
+
+form {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px 40px;
+}
+
+label {
+  font-weight:bold;
+  color:#155724;
+  display:block;
+  margin-bottom:5px;
+  font-size:15px;
+}
+
+input, textarea {
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #9ccc65;
+  border-radius:6px;
+  font-size:14px;
+  background-color:#f9fff9;
+  color:#155724;
+  box-sizing:border-box;
+}
+
+input:focus, textarea:focus {
+  outline:none;
+  border-color:#218838;
+  background-color:#ffffff;
+  box-shadow:0 0 5px #74c69d;
+}
+
+textarea {
+  resize:vertical;
+  min-height:70px;
+}
+
+.optional {
+  font-size:12px;
+  color:gray;
+  font-style:italic;
+}
+
+.buttons {
+  grid-column:span 2;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  margin-top:25px;
+}
+
+.save-btn, .view-btn {
+  background:#28a745;
+  color:white;
+  border:none;
+  padding:12px 28px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:bold;
+  transition:all 0.2s ease;
+}
+
+.save-btn:hover, .view-btn:hover {
+  background:#218838;
+  transform:scale(1.05);
+}
+
+.save-btn:disabled {
+  background:#6c757d;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.right img {
+  width:250px;
+  height:auto;
+  margin-top:50px;
+  border-radius:12px;
+  border:3px solid #218838;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.message {
+  text-align:center;
+  font-weight:bold;
+  font-size:15px;
+  margin-bottom:10px;
+  padding:10px;
+  border-radius:6px;
+  display:none;
+}
+
+.error { color:#721c24; background:#f8d7da; border:1px solid #f5c6cb; }
+.success { color:#155724; background:#d4edda; border:1px solid #c3e6cb; }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media(max-width:768px){
+  .container {
+    flex-direction:column;
+    align-items:center;
+    padding:15px;
+    gap:20px;
+  }
+  .form-card {
+    width:100%;
+    padding:25px 20px;
+    border-left:6px solid #218838;
+  }
+  form {
+    grid-template-columns:1fr;
+    gap:15px 0;
+  }
+  .buttons {
+    flex-direction:column;
+    gap:12px;
+  }
+  .save-btn, .view-btn {
+    width:100%;
+  }
+  .right {
+    width:100%;
+    text-align:center;
+  }
+  .right img {
+    width:120px;
+    margin:15px auto 0 auto;
+    border-radius:12px;
+    border:2px solid #218838;
+  }
+  header {
+    font-size:18px;
+    padding:12px 0;
+  }
+  h1 {
+    font-size:20px;
+    margin-bottom:15px;
+    padding-bottom:8px;
+  }
+  label {
+    font-size:14px;
+  }
+  input, textarea {
+    font-size:14px;
+    padding:8px 10px;
+  }
+}
+</style>
+
+</style>
+</head>
+<body>
+
+<header>SCHOOL CLINIC CONSULTATION FORM</header>
+
+<div class="container">
+  <div class="form-card">
+    <h1>ASSESSMENT SHEET</h1>
+    <div id="message" class="message"></div>
+
+    <form id="clinic-form">
+      <div>
+        <label>NAME:</label>
+        <input type="text" name="name" id="name" placeholder="Enter Name" required>
+
+        <label>STUDENT NUMBER:</label>
+        <input type="text" name="student_number" id="student_number" placeholder="Enter Student Number" required>
+
+        <label>SECTION/OFFICE:</label>
+        <input type="text" name="section" id="section" placeholder="Enter Section or Office" required>
+
+        <label>DATE:</label>
+        <input type="date" name="date" id="date" required>
+
+        <label>TIME IN:</label>
+        <input type="time" name="time_in" id="time_in" required>
+
+        <label>TIME OUT: <span class="optional">(Optional)</span></label>
+        <input type="time" name="time_out" id="time_out">
+      </div>
+
+      <div>
+        <label>CHIEF COMPLAINTS:</label>
+        <textarea name="complaints" id="complaints" placeholder="Enter Chief Complaints" required></textarea>
+
+        <label>ASSESSMENT:</label>
+        <textarea name="assessment" id="assessment" placeholder="Enter Assessment" required></textarea>
+
+        <label>MEDICINE:</label>
+        <textarea name="medicine" id="medicine" placeholder="Enter Medicine Given" required></textarea>
+
+        <label>INTERVENTION:</label>
+        <textarea name="intervention" id="intervention" placeholder="Enter Intervention" required></textarea>
+
+        <label>CLINIC PERSONNEL:</label>
+        <input type="text" name="personnel" id="personnel" placeholder="Enter Clinic Personnel Name" required>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="save-btn" id="save-btn" disabled>💾 Save Record</button>
+        <button type="button" class="view-btn" onclick="window.location.href='record.html'" id="view-btn" disabled>📋 View Records</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="right">
+    <img src="school logo.jpg" alt="School Logo">
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtgHPi-wvbsC9ZYZQXtiaZu7Y_ysO7LwA",
+  authDomain: "clinicsystem-e2fb2.firebaseapp.com",
+  projectId: "clinicsystem-e2fb2",
+  storageBucket: "clinicsystem-e2fb2.appspot.com",
+  messagingSenderId: "362758307780",
+  appId: "1:362758307780:web:22828a5a04f8b97895ae91",
+  measurementId: "G-DNL5VQ7872"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const clinicRecordsCollection = collection(db, "clinic_records");
+
+let currentUserId = null;
+let isAuthenticated = false;
+
+const form = document.getElementById('clinic-form');
+const saveBtn = document.getElementById('save-btn');
+const viewBtn = document.getElementById('view-btn');
+const messageDiv = document.getElementById('message');
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('date').value = new Date().toISOString().split('T')[0];
+  initializeAuth();
+});
+
+async function initializeAuth() {
+  try {
+    await signInAnonymously(auth);
+  } catch (error) {
+    console.error('Auth error:', error);
+    return;
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      currentUserId = user.uid;
+      isAuthenticated = true;
+      saveBtn.disabled = false;
+      viewBtn.disabled = false;
+     
+    } else {
+      isAuthenticated = false;
+      saveBtn.disabled = true;
+      viewBtn.disabled = true;
+    }
+  });
+}
+
+form.addEventListener('submit', async function(e){
+  e.preventDefault();
+  if(!isAuthenticated){ showMessage('Not connected to database.', 'error'); return; }
+
+  const data = {
+    userId: currentUserId,
+    name: form.name.value.trim(),
+    student_number: form.student_number.value.trim(),
+    section: form.section.value.trim(),
+    date: form.date.value,
+    time_in: form.time_in.value,
+    time_out: form.time_out.value || '',
+    complaints: form.complaints.value.trim(),
+    assessment: form.assessment.value.trim(),
+    medicine: form.medicine.value.trim(),
+    intervention: form.intervention.value.trim(),
+    personnel: form.personnel.value.trim(),
+    timestamp: new Date().toISOString()
+  };
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = '💾 Saving...';
+
+  try {
+    await addDoc(clinicRecordsCollection, data);
+    form.reset();
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    showMessage('✅ Record saved! Redirecting...', 'success');
+    setTimeout(()=>window.location.href='record.html', 1000);
+  } catch(err){
+    console.error(err);
+    showMessage('❌ Failed to save record.', 'error');
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = '💾 Save Record';
+  }
+});
+
+function showMessage(text,type){
+  messageDiv.textContent = text;
+  messageDiv.className = `message ${type}`;
+  messageDiv.style.display='block';
+  setTimeout(()=>messageDiv.style.display='none',5000);
+}
+</script>
+
+</body>
+</html>
